@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Items from "./Items";
-import { CartContext } from "./Cart";
+import { CartContext } from "../App";
 
 const ContextCart = () => {
   const { item, clearCart, totalItem, totalAmount } = useContext(CartContext);
-
+console.log(item);
   if (item.length === 0) {
     return (
       <>

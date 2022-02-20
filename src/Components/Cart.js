@@ -9,7 +9,7 @@ export const CartContext = createContext();
 const Cart = ({Products}) => {
   
   const initialState = {
-    item: Products,
+    item: "",
     totalAmount: 0,
     totalItem: 0,
   };

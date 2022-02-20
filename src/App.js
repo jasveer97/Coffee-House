@@ -1,4 +1,4 @@
-import React,{useState,} from 'react'
+import React,{useState,createContext, useReducer, useEffect} from 'react'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom'
 import './style.css'
 import Header from './Components/Header'
@@ -13,16 +13,16 @@ import News from './Components/News'
 import Services from './Components/Services'
 import Venue from './Components/Venue'
 import Customer from './Components/Customer'
-import Cart from './Components/Cart'
+import ContextCart from "./Components/ContextCart";
+import { reducer } from "./Components/reducer";
 
 
-
+export const CartContext = createContext();
 
 const App = () => {
-  const [menu,setmenu]=useState(MenuData);
-  const[Products,setProducts]=useState([]);
-  
 
+
+  const [menu,setmenu]=useState(MenuData);
   const filterMenu=(cat)=>{
       if(cat==='full')
         return setmenu(MenuData);
@@ -30,26 +30,77 @@ const App = () => {
       setmenu(updateItem);
   }
 
-  const getItem=[];
+ 
+// {Cart Function}
 
-  const printT=(ele)=>{
-   getItem.push(ele);
-  //  setProducts(...getItem);
-    // console.log(Products);
-    console.log(getItem);
-    // console.log();
-  }
+const initialState = {
+  item: [{
+    id: 'init',
+    image: "",
+    name: "",
+    category: "",
+    price: "",
+    description:
+      "",
+      quantity:1,
+  }],
+  totalAmount: 0,
+  totalItem: 0,
+};
 
-  const clickCart=()=>{
-    setProducts(getItem);
-    console.log('called');
-  }
+const [state, dispatch] = useReducer(reducer, initialState);
+
+const printT=(ele)=>{
+  return dispatch({
+    type: "ADD_CART",
+    payload: ele,
+  });
+};
+
+const removeItem = (id) => {
+  return dispatch({
+    type: "REMOVE_ITEM",
+    payload: id,
+  });
+};
+
+const clearCart = () => {
+  return dispatch({ type: "CLEAR_CART" });
+};
+
+const increment = (id) => {
+  return dispatch({
+    type: "INCREMENT",
+    payload: id,
+  });
+};
+
+const decrement = (id) => {
+  return dispatch({
+    type: "DECREMENT",
+    payload: id,
+  });
+};
+
+useEffect(() => {
+  dispatch({ type: "GET_TOTAL" });
+}, [state.item]);
+
+
+useEffect(() => {
+  dispatch({type: "DECREMENT",payload: "init"})
+}, []);
+
+
+
+
   
   return (
     <div>
-      
+      <CartContext.Provider value={{ ...state, removeItem, clearCart, increment, decrement }}>
+
       <Router>
-        <Header filterMenu={filterMenu} clickCart={clickCart}/>
+        <Header filterMenu={filterMenu}/>
         <Routes>
           <Route exact path='/' element={<Home/>}></Route>
           <Route exact path='/about' element={<About/>}></Route>
@@ -61,10 +112,11 @@ const App = () => {
           <Route exact path='/news' element={<News/>}></Route>
           <Route exact path='/venue' element={<Venue/>}></Route>
           <Route exact path='/customer' element={<Customer compoName="Our Happy Customer"/>}></Route>
-          <Route exact path='/cart' element={<Cart Products={Products} />}></Route>
+          <Route exact path='/cart' element={<ContextCart />}></Route>
         </Routes>
         <Footer/>
       </Router>
+      </CartContext.Provider>
       
     </div>
   )

@@ -1,4 +1,13 @@
 export const reducer = (state, action) => {
+
+  if(action.type === "ADD_CART"){
+    const newItem=action.payload;
+    return{
+      ...state,
+      item: [...state.item, newItem]
+    }
+  }
+
   if (action.type === "REMOVE_ITEM") {
     return {
       ...state,

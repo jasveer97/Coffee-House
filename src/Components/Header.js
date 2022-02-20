@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = ({filterMenu,clickCart}) => {
+const Header = ({filterMenu}) => {
   return (
     <div>
           
@@ -69,7 +69,7 @@ const Header = ({filterMenu,clickCart}) => {
                         <Link to="/contact" className="nav-link active">Contact Us</Link> 
                         </li>
                         <li className="nav-item">
-                        <Link to="/cart" className="nav-link active"><i className="fa-solid fa-cart-shopping" onClick={()=>clickCart()}></i></Link> 
+                        <Link to="/cart" className="nav-link active"><i className="fa-solid fa-cart-shopping" ></i></Link> 
                         </li>
                        
                         
