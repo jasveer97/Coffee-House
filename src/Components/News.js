@@ -16,10 +16,11 @@ const News = (props) => {
       
         
     }
-  }
-    
+  }    
     
     useEffect(()=>getNews(),[]);
+
+
   return (
       <>
 
@@ -27,13 +28,11 @@ const News = (props) => {
       <div className="container-fluid bg">
 
       <div className="row bg" >
-      <h2 className='yello pt-2'>{props.compoName}</h2>
-    
+      <h2 className='yello pt-2 '>{props.compoName}</h2>
       {
-        
         news.map(news=>
           <div className="col-md-4 col-xs-12">
-
+    
           <div className="card mt-2 mb-2" style={{height:'600px'}} >
                   <img src={news.urlToImage} alt="" className='card-img-top' style={{width:'250px',height:'200px'}}/>
                   <div className="card-body">
@@ -44,9 +43,11 @@ const News = (props) => {
                   </div>
                 </div>
           </div>
+        )
+      }
+    
+      
 
-)
-}
       
 </div>
 </div>

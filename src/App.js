@@ -50,11 +50,30 @@ const initialState = {
 
 const [state, dispatch] = useReducer(reducer, initialState);
 
-const printT=(ele)=>{
+const addTOCart=(ele)=>{
+
+  let Value = 0 , st;
+state.item.map((curEle)=>{
+    if(curEle.id ===ele.id) 
+      return Value=1;
+  })
+ 
+
+  console.log(Value);
+  if(Value)
+  {
+    
+    return dispatch({
+      type: "INCREMENT",
+      payload: ele.id,
+    })
+  }
+  else
+  {
   return dispatch({
     type: "ADD_CART",
     payload: ele,
-  });
+  })}
 };
 
 const removeItem = (id) => {
@@ -97,7 +116,7 @@ useEffect(() => {
   
   return (
     <div>
-      <CartContext.Provider value={{ ...state, removeItem, clearCart, increment, decrement }}>
+      <CartContext.Provider value={{ ...state, removeItem, clearCart, increment, decrement,addTOCart }}>
 
       <Router>
         <Header filterMenu={filterMenu}/>
@@ -106,7 +125,7 @@ useEffect(() => {
           <Route exact path='/about' element={<About/>}></Route>
           <Route exact path='/services' element={<Services  compName="Our Services"/>}></Route>
         
-          <Route exact path='/menu' element={<Menu menu={menu} printT={printT}/>}></Route>
+          <Route exact path='/menu' element={<Menu menu={menu} />}></Route>
           <Route exact path='/contact' element={<Contact/>}></Route>
           <Route exact path='/gallery' element={<Gallery/>}></Route>
           <Route exact path='/news' element={<News/>}></Route>

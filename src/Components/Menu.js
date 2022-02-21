@@ -1,9 +1,10 @@
 import { logDOM } from '@testing-library/react'
-import React from 'react'
-
+import React,{useContext} from 'react'
+import { CartContext } from '../App'
 import './style.css'
 
 const Menu = ({menu,printT}) => {
+  const {addTOCart}=useContext(CartContext);
 
   return (
     <div className="container-fluid menu">
@@ -20,7 +21,7 @@ const Menu = ({menu,printT}) => {
                       <h6 className="card-title">{ele.name}</h6>
                       <p className="card-body">{ele.description}</p>
                       {/* <a  className="btn ">Order</a> */}
-                      <a  className="btn  mt-2" onClick={()=>printT(ele)}>Add to cart</a>
+                      <a  className="btn  mt-2" onClick={()=>addTOCart(ele)}>Add to cart</a>
                     </div>
                   </div>
               </div>
